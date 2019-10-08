@@ -43,5 +43,20 @@ def decrypt_caesar(ciphertext):
     >>> decrypt_caesar("")
     ''
     """
-    # PUT YOUR CODE HERE
+    ALPHABET = 'ZYXWVUTSRQPONMLKJIHGFEDCBA'
+    alphabet = ALPHABET.lower()
+    plaintext = ''
+
+    for ch in ciphertext:
+
+        if ch in alphabet:
+            plaintext += alphabet[(alphabet.index(ch)+3)%26]
+
+        elif ch in ALPHABET:
+            plaintext += ALPHABET[(ALPHABET.index(ch)+3)%26]
+
+        else:
+            plaintext += ch
+
+
     return plaintext
