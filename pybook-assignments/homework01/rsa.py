@@ -87,18 +87,18 @@ def generate_keypair(p, q):
         raise ValueError('p and q cannot be equal')
 
     # n = pq
-    # PUT YOUR CODE HERE
+    n = p*q
 
     # phi = (p-1)(q-1)
-    # PUT YOUR CODE HERE
+    phi = (p-1)(q-1)
 
     # Choose an integer e such that e and phi(n) are coprime
-    e = random.randrange(1, phi)
+    e = random.randrange(2, phi)
 
     # Use Euclid's Algorithm to verify that e and phi(n) are comprime
     g = gcd(e, phi)
     while g != 1:
-        e = random.randrange(1, phi)
+        e = random.randrange(2, phi)
         g = gcd(e, phi)
 
     # Use Extended Euclid's Algorithm to generate the private key
