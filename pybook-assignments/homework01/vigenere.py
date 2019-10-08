@@ -48,5 +48,30 @@ def decrypt_vigenere(ciphertext, keyword):
     >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
     'ATTACKATDAWN'
     """
-    # PUT YOUR CODE HERE
+    keyword = keyword.upper()
+    i = 0
+    while len(keyword) < len(ciphertext):
+        keyword += keyword[i]
+        i += 1
+
+    N_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    ALPHABET = 'ZYXWVUTSRQPONMLKJIHGFEDCBA'
+    alphabet = ALPHABET.lower()
+    plaintext = ''
+
+    for i in range(len(ciphertext)):
+
+        ch = ciphertext[i]
+        k = keyword[i]
+
+        if ch in alphabet:
+            plaintext += alphabet[(alphabet.index(ch)+N_ALPHABET.index(k))%26]
+
+        elif ch in ALPHABET:
+            plaintext += ALPHABET[(ALPHABET.index(ch)+N_ALPHABET.index(k))%26]
+
+        else:
+            plaintext += ch
+
+
     return plaintext
