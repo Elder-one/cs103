@@ -56,8 +56,28 @@ def multiplicative_inverse(e, phi):
     >>> multiplicative_inverse(7, 40)
     23
     """
-    # PUT YOUR CODE HERE
-    pass
+    phi_buff = phi
+    ab_table = []
+
+    while phi % e != 0:
+
+        ab_table.append(phi // e)
+        buff = phi % e
+        phi = e; e = buff
+
+    ab_table.reverse()
+
+    x = 0; y = 1
+
+    for el in ab_table:
+
+        buff = x
+
+        x = y
+
+        y = buff - y*el
+
+    return y % phi_buff
 
 
 def generate_keypair(p, q):
