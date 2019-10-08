@@ -9,7 +9,31 @@ def encrypt_vigenere(plaintext, keyword):
     >>> encrypt_vigenere("ATTACKATDAWN", "LEMON")
     'LXFOPVEFRNHR'
     """
-    # PUT YOUR CODE HERE
+    keyword = keyword.upper()
+    i = 0
+    while len(keyword) < len(plaintext):
+        keyword += keyword[i]
+        i += 1
+
+    ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    alphabet = ALPHABET.lower()
+    ciphertext = ''
+
+    for i in range(len(plaintext)):
+
+        ch = plaintext[i]
+        k = keyword[i]
+
+        if ch in alphabet:
+            ciphertext += alphabet[(alphabet.index(ch)+ALPHABET.index(k))%26]
+
+        elif ch in ALPHABET:
+            ciphertext += ALPHABET[(ALPHABET.index(ch)+ALPHABET.index(k))%26]
+
+        else:
+            ciphertext += ch
+
+
     return ciphertext
 
 
