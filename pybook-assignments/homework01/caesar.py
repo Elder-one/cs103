@@ -18,14 +18,13 @@ def encrypt_caesar(plaintext):
     for ch in plaintext:
 
         if ch in alphabet:
-            ciphertext += alphabet[(alphabet.index(ch)+3)%26]
+            ciphertext += alphabet[(alphabet.index(ch) + 3) % 26]
 
         elif ch in ALPHABET:
-            ciphertext += ALPHABET[(ALPHABET.index(ch)+3)%26]
+            ciphertext += ALPHABET[(ALPHABET.index(ch) + 3) % 26]
 
         else:
             ciphertext += ch
-
 
     return ciphertext
 
@@ -50,13 +49,12 @@ def decrypt_caesar(ciphertext):
     for ch in ciphertext:
 
         if ch in alphabet:
-            plaintext += alphabet[(alphabet.index(ch)+3)%26]
+            plaintext += alphabet[(alphabet.index(ch) + 3) % 26]
 
         elif ch in ALPHABET:
-            plaintext += ALPHABET[(ALPHABET.index(ch)+3)%26]
+            plaintext += ALPHABET[(ALPHABET.index(ch) + 3) % 26]
 
         else:
             plaintext += ch
-
 
     return plaintext

@@ -63,11 +63,13 @@ def multiplicative_inverse(e, phi):
 
         ab_table.append(phi // e)
         buff = phi % e
-        phi = e; e = buff
+        phi = e
+        e = buff
 
     ab_table.reverse()
 
-    x = 0; y = 1
+    x = 0
+    y = 1
 
     for el in ab_table:
 
