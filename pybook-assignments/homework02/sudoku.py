@@ -28,7 +28,19 @@ def group(values: List[str], n: int) -> List[List[str]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    pass
+    result = []
+    i = 0
+
+    for _ in range(n):
+
+        result.append([])
+
+        for _1 in range(n):
+
+            result[-1].append(List[i])
+            i += 1
+
+    return result
 
 
 def get_row(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
@@ -41,7 +53,7 @@ def get_row(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     >>> get_row([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (2, 0))
     ['.', '8', '9']
     """
-    pass
+    return grid[pos[0]]
 
 
 def get_col(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
@@ -54,7 +66,12 @@ def get_col(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    pass
+    result = []
+
+    for row in grid:
+        result.append(row[pos[1]])
+
+    return result
 
 
 def get_block(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
@@ -68,7 +85,20 @@ def get_block(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    pass
+    row, col = pos
+
+    row = row // 3 * 3
+    col = col // 3 * 3
+
+    result = []
+
+    for i in range(row, row + 3):
+
+        for j in range(col, col + 3):
+
+            result.append(grid[i][j])
+
+    return result
 
 
 def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
