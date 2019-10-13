@@ -1,4 +1,5 @@
 from typing import Tuple, List, Set, Optional
+from random import randint
 
 
 def read_sudoku(filename: str) -> List[List[str]]:
@@ -184,7 +185,34 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
 def check_solution(solution: List[List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
     # TODO: Add doctests with bad puzzles
-    pass
+    for i in range(9):
+        for j in range(9):
+            block = get_block(solution, (i, j))
+            row = get_row(solution, (i, j))
+            col = get_col(solution, (i, j))
+
+            if len(block) > len(set(block)):
+                return False
+
+            if len(row) > len(set(row)):
+                return False
+
+            if len(col) > len(set(col)):
+                return False
+
+    return True
+
+
+def transp(matrix):
+    buff = []
+    n = len(matrix)
+
+    for i in range(n):
+        buff.append([])
+        for j in range(n):
+            buff[i].append(matrix[j][i])
+
+    return buff
 
 
 def generate_sudoku(N: int) -> List[List[str]]:
@@ -209,8 +237,103 @@ def generate_sudoku(N: int) -> List[List[str]]:
     >>> check_solution(solution)
     True
     """
-    pass
+    base_grid = [[str((i * 3 + i // 3 + j) % 9 + 1) for j in range(9)] for i in range(9)]
 
+    for _ in range(40): #40 перетасовок
+
+        choice  = randint(1, 5)
+
+        if choice == 1: #транспонирование
+
+            base_grid = transp(base_grid)
+
+        elif choice == 2: #перемещение районов строк
+
+            n1 = randint(0, 2)
+
+            n2 = randint(0, 2)
+
+            while n1 == n2:
+                n2 = randint(0, 2)
+
+            n1 *= 3
+            n2 *= 3
+
+            for i in range(3):
+                base_grid[n1], base_grid[n2] = base_grid[n2], base_grid[n1]
+                n1 += 1
+                n2 += 1
+
+        elif choice == 3: #перемещение районов столбцов
+
+            base_grid = transp(base_grid)
+
+            n1 = randint(0, 2) #поменять районы строк
+
+            n2 = randint(0, 2)
+
+            while n1 == n2:
+                n2 = randint(0, 2)
+
+            n1 *= 3
+            n2 *= 3
+
+            for i in range(3):
+                base_grid[n1], base_grid[n2] = base_grid[n2], base_grid[n1]
+                n1 += 1
+                n2 += 1
+
+            base_grid = transp(base_grid)
+
+        elif choice == 4: #перемещение строк в пределах района
+
+            n = randint(0, 2) #выбор района
+
+            n1 = randint(0, 2)
+            n2 = randint(0, 2)
+
+            while n1 == n2:
+                n2 = randint(0, 2)
+
+            n1 += n*3
+            n2 += n*3
+
+            base_grid[n1], base_grid[n2] = base_grid[n2], base_grid[n1]
+
+        else: #перемещение столбцов в пределах района
+
+            base_grid = transp(base_grid)
+
+            n = randint(0, 2) #выбор района
+
+            n1 = randint(0, 2)
+            n2 = randint(0, 2)
+
+            while n1 == n2:
+                n2 = randint(0, 2)
+
+            n1 += n*3
+            n2 += n*3
+
+            base_grid[n1], base_grid[n2] = base_grid[n2], base_grid[n1]
+
+            base_grid = transp(base_grid)
+
+    forbiden = set()
+    for _ in range(81-N):
+
+        i = randint(0, 8)
+        j = randint(0, 8)
+
+        while (i, j) in forbiden:
+            i = randint(0, 8)
+            j = randint(0, 8)
+
+        base_grid[i][j] = '.'
+
+        forbiden.add((i, j))
+
+    return base_grid
 
 if __name__ == '__main__':
     for fname in ['puzzle1.txt', 'puzzle2.txt', 'puzzle3.txt']:
