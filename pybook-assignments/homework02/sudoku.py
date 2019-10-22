@@ -29,19 +29,7 @@ def group(values: List[str], n: int) -> List[List[str]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    result = []
-    i = 0
-
-    for _ in range(n):
-
-        result.append([])
-
-        for _1 in range(n):
-
-            result[-1].append(values[i])
-            i += 1
-
-    return result
+    return [values[n*i:n*i+n] for i in range(n)]
 
 
 def get_row(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
@@ -334,6 +322,7 @@ def generate_sudoku(N: int) -> List[List[str]]:
         forbiden.add((i, j))
 
     return base_grid
+
 
 if __name__ == '__main__':
     for fname in ['puzzle1.txt', 'puzzle2.txt', 'puzzle3.txt']:
