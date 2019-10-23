@@ -158,8 +158,8 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
             return result
 
     grid[row][col] = '.'
-    return #комментарий, чтобы закоммитить эту ф-цию
 
+    return #комментарий, чтобы закоммитить эту ф-цию
 
 
 def check_solution(solution: List[List[str]]) -> bool:
@@ -224,13 +224,10 @@ def generate_sudoku(N: int) -> List[List[str]]:
         choice  = randint(1, 5)
 
         if choice == 1: #транспонирование
-
             base_grid = transp(base_grid)
 
         elif choice == 2: #перемещение районов строк
-
             n1 = randint(0, 2)
-
             n2 = randint(0, 2)
 
             while n1 == n2:
@@ -245,11 +242,9 @@ def generate_sudoku(N: int) -> List[List[str]]:
                 n2 += 1
 
         elif choice == 3: #перемещение районов столбцов
-
             base_grid = transp(base_grid)
 
             n1 = randint(0, 2) #поменять районы строк
-
             n2 = randint(0, 2)
 
             while n1 == n2:
@@ -266,9 +261,7 @@ def generate_sudoku(N: int) -> List[List[str]]:
             base_grid = transp(base_grid)
 
         elif choice == 4: #перемещение строк в пределах района
-
             n = randint(0, 2) #выбор района
-
             n1 = randint(0, 2)
             n2 = randint(0, 2)
 
@@ -281,11 +274,9 @@ def generate_sudoku(N: int) -> List[List[str]]:
             base_grid[n1], base_grid[n2] = base_grid[n2], base_grid[n1]
 
         else: #перемещение столбцов в пределах района
-
             base_grid = transp(base_grid)
 
             n = randint(0, 2) #выбор района
-
             n1 = randint(0, 2)
             n2 = randint(0, 2)
 
@@ -299,19 +290,19 @@ def generate_sudoku(N: int) -> List[List[str]]:
 
             base_grid = transp(base_grid)
 
-    forbiden = set()
+    done = set() #вычеркиваем случайные цифры из поля
     for _ in range(81-N):
 
         i = randint(0, 8)
         j = randint(0, 8)
 
-        while (i, j) in forbiden:
+        while (i, j) in done:
             i = randint(0, 8)
             j = randint(0, 8)
 
         base_grid[i][j] = '.'
 
-        forbiden.add((i, j))
+        done.add((i, j))
 
     return base_grid
 
