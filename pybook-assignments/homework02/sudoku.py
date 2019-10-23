@@ -1,5 +1,6 @@
 from typing import Tuple, List, Set, Optional
 from random import randint
+from time import time
 
 
 def read_sudoku(filename: str) -> List[List[str]]:
@@ -310,9 +311,6 @@ def generate_sudoku(N: int) -> List[List[str]]:
 if __name__ == '__main__':
     for fname in ['puzzle1.txt', 'puzzle2.txt', 'puzzle3.txt']:
         grid = read_sudoku(fname)
-        display(grid)
-        solution = solve(grid)
-        if not solution:
-            print(f"Puzzle {fname} can't be solved")
-        else:
-            display(solution)
+        start = time()
+        solve(grid)
+        print(f'{fname}: {time() - start}')
