@@ -24,7 +24,6 @@ def display(grid: List[List[str]]) -> None:
 def group(values: List[str], n: int) -> List[List[str]]:
     """
     Сгруппировать значения values в список, состоящий из списков по n элементов
-
     >>> group([1,2,3,4], 2)
     [[1, 2], [3, 4]]
     >>> group([1,2,3,4,5,6,7,8,9], 3)
@@ -35,7 +34,6 @@ def group(values: List[str], n: int) -> List[List[str]]:
 
 def get_row(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     """ Возвращает все значения для номера строки, указанной в pos
-
     >>> get_row([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']], (0, 0))
     ['1', '2', '.']
     >>> get_row([['1', '2', '3'], ['4', '.', '6'], ['7', '8', '9']], (1, 0))
@@ -48,7 +46,6 @@ def get_row(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
 
 def get_col(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     """ Возвращает все значения для номера столбца, указанного в pos
-
     >>> get_col([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']], (0, 0))
     ['1', '4', '7']
     >>> get_col([['1', '2', '3'], ['4', '.', '6'], ['7', '8', '9']], (0, 1))
@@ -66,7 +63,6 @@ def get_col(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
 
 def get_block(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     """ Возвращает все значения из квадрата, в который попадает позиция pos
-
     >>> grid = read_sudoku('puzzle1.txt')
     >>> get_block(grid, (0, 1))
     ['5', '3', '.', '6', '.', '.', '.', '9', '8']
@@ -85,7 +81,6 @@ def get_block(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
 
 def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
     """ Найти первую свободную позицию в пазле
-
     >>> find_empty_positions([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']])
     (0, 2)
     >>> find_empty_positions([['1', '2', '3'], ['4', '.', '6'], ['7', '8', '9']])
@@ -104,7 +99,6 @@ def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
 
 def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str]:
     """ Вернуть множество возможных значения для указанной позиции
-
     >>> grid = read_sudoku('puzzle1.txt')
     >>> values = find_possible_values(grid, (0,2))
     >>> values == {'1', '2', '4'}
@@ -132,7 +126,6 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
         3. Для каждого возможного значения:
             3.1. Поместить это значение на эту позицию
             3.2. Продолжить решать оставшуюся часть пазла
-
     >>> grid = read_sudoku('puzzle1.txt')
     >>> solve(grid)
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
@@ -160,7 +153,7 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
 
     grid[row][col] = '.'
 
-    return #комментарий, чтобы закоммитить эту ф-цию
+    return  # комментарий, чтобы закоммитить эту ф-цию
 
 
 def check_solution(solution: List[List[str]]) -> bool:
@@ -198,7 +191,6 @@ def transp(matrix):
 
 def generate_sudoku(N: int) -> List[List[str]]:
     """ Генерация судоку заполненного на N элементов
-
     >>> grid = generate_sudoku(40)
     >>> sum(1 for row in grid for e in row if e == '.')
     41
@@ -220,14 +212,14 @@ def generate_sudoku(N: int) -> List[List[str]]:
     """
     base_grid = [[str((i * 3 + i // 3 + j) % 9 + 1) for j in range(9)] for i in range(9)]
 
-    for _ in range(40): #40 перетасовок
+    for _ in range(40):  # 40 перетасовок
 
-        choice  = randint(1, 5)
+        choice = randint(1, 5)
 
-        if choice == 1: #транспонирование
+        if choice == 1:  # транспонирование
             base_grid = transp(base_grid)
 
-        elif choice == 2: #перемещение районов строк
+        elif choice == 2:  # перемещение районов строк
             n1 = randint(0, 2)
             n2 = randint(0, 2)
 
@@ -242,10 +234,10 @@ def generate_sudoku(N: int) -> List[List[str]]:
                 n1 += 1
                 n2 += 1
 
-        elif choice == 3: #перемещение районов столбцов
+        elif choice == 3:  # перемещение районов столбцов
             base_grid = transp(base_grid)
 
-            n1 = randint(0, 2) #поменять районы строк
+            n1 = randint(0, 2)  # поменять районы строк
             n2 = randint(0, 2)
 
             while n1 == n2:
@@ -261,8 +253,8 @@ def generate_sudoku(N: int) -> List[List[str]]:
 
             base_grid = transp(base_grid)
 
-        elif choice == 4: #перемещение строк в пределах района
-            n = randint(0, 2) #выбор района
+        elif choice == 4:  # перемещение строк в пределах района
+            n = randint(0, 2)  # выбор района
             n1 = randint(0, 2)
             n2 = randint(0, 2)
 
@@ -274,10 +266,10 @@ def generate_sudoku(N: int) -> List[List[str]]:
 
             base_grid[n1], base_grid[n2] = base_grid[n2], base_grid[n1]
 
-        else: #перемещение столбцов в пределах района
+        else:  # перемещение столбцов в пределах района
             base_grid = transp(base_grid)
 
-            n = randint(0, 2) #выбор района
+            n = randint(0, 2)  # выбор района
             n1 = randint(0, 2)
             n2 = randint(0, 2)
 
@@ -291,7 +283,7 @@ def generate_sudoku(N: int) -> List[List[str]]:
 
             base_grid = transp(base_grid)
 
-    done = set() #вычеркиваем случайные цифры из поля
+    done = set()  # вычеркиваем случайные цифры из поля
     for _ in range(81-N):
 
         i = randint(0, 8)
@@ -314,3 +306,4 @@ if __name__ == '__main__':
         start = time()
         solve(grid)
         print(f'{fname}: {time() - start}')
+        
