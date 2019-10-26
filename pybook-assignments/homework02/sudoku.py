@@ -54,10 +54,8 @@ def get_col(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     ['3', '6', '9']
     """
     result = []
-
     for row in grid:
         result.append(row[pos[1]])
-
     return result
 
 
@@ -72,14 +70,12 @@ def get_block(grid: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
     row, col = pos
-
     row = row // 3 * 3
     col = col // 3 * 3
-
     return [grid[i][j] for i in range(row, row+3) for j in range(col, col + 3)]
 
 
-def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
+def find_empty_positions(grid: List[List[str]]) -> Tuple[int, int]:
     """ Найти первую свободную позицию в пазле
     >>> find_empty_positions([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']])
     (0, 2)
@@ -108,11 +104,14 @@ def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str
     True
     """
     result = set()
+    row = get_row(grid, pos)
+    col = get_col(grid, pos)
+    block = get_block(grid, pos)
 
     for ch in '123456789':
-        if ch not in get_row(grid, pos):
-            if ch not in get_col(grid, pos):
-                if ch not in get_block(grid, pos):
+        if ch not in row:
+            if ch not in col:
+                if ch not in block:
                     result.add(ch)
 
     return result
@@ -131,29 +130,21 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
     empty_pos = find_empty_positions(grid)
-
     if empty_pos == (-1, -1):
         return grid
 
     values = find_possible_values(grid, empty_pos)
-
     if len(values) == 0:
         return
 
     row, col = empty_pos
-
     for value in values:
-
         grid[row][col] = value
-
         result = solve(grid)
-
         if result:
             return result
 
     grid[row][col] = '.'
-
-    return  # комментарий, чтобы закоммитить эту ф-цию
 
 
 def check_solution(solution: List[List[str]]) -> bool:
@@ -294,7 +285,6 @@ def generate_sudoku(N: int) -> List[List[str]]:
             j = randint(0, 8)
 
         base_grid[i][j] = '.'
-
         done.add((i, j))
 
     return base_grid
