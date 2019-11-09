@@ -24,6 +24,11 @@ class GameOfLife:
         return Grid
 
     def get_neighbours(self, cell):
+        """ Вернуть список соседей для указанной ячейки
+
+        :param cell: Позиция ячейки в сетке, задается кортежем вида (row, col)
+        :return: Одномерный список ячеек, смежных к ячейке cell
+        """
         neighbours = []
         row, col = cell
         k, m = self.cols, self.rows
@@ -103,7 +108,7 @@ class GUI(UI):
         self.screen = pygame.display.set_mode(self.screen_size)
 
     def draw_grid(self):
-        """ Ð Ñ›Ð¡â€šÐ¡Ð‚Ð Ñ‘Ð¡ÐƒÐ Ñ•Ð Ð†Ð Â°Ð¡â€šÐ¡ÐŠ Ð¡ÐƒÐ ÂµÐ¡â€šÐ Ñ”Ð¡Ñ“ """
+        """ Отрисовать сетку """
         for x in range(0, self.width, self.cell_size):
             pygame.draw.line(self.screen, pygame.Color('black'),
                     (x, 0), (x, self.height))
@@ -112,9 +117,9 @@ class GUI(UI):
                     (0, y), (self.width, y))
 
     def draw_cell_list(self, clist):
-        """ Ð Ñ›Ð¡â€šÐ Ñ•Ð Â±Ð¡Ð‚Ð Â°Ð Â¶Ð ÂµÐ Ð…Ð Ñ‘Ð Âµ Ð¡ÐƒÐ Ñ—Ð Ñ‘Ð¡ÐƒÐ Ñ”Ð Â° Ð Ñ”Ð Â»Ð ÂµÐ¡â€šÐ Ñ•Ð Ñ”
+        """ Отображение списка клеток
 
-        :param rects: Ð ÐŽÐ Ñ—Ð Ñ‘Ð¡ÐƒÐ Ñ•Ð Ñ” Ð Ñ”Ð Â»Ð ÂµÐ¡â€šÐ Ñ•Ð Ñ” Ð Ò‘Ð Â»Ð¡Ð Ð Ñ•Ð¡â€šÐ¡Ð‚Ð Ñ‘Ð¡ÐƒÐ Ñ•Ð Ð†Ð Ñ”Ð Ñ‘, Ð Ñ—Ð¡Ð‚Ð ÂµÐ Ò‘Ð¡ÐƒÐ¡â€šÐ Â°Ð Ð†Ð Â»Ð ÂµÐ Ð…Ð Ð…Ð¡â€¹Ð â„– Ð Ð† Ð Ð†Ð Ñ‘Ð Ò‘Ð Âµ Ð Ñ˜Ð Â°Ð¡â€šÐ¡Ð‚Ð Ñ‘Ð¡â€ Ð¡â€¹
+        :param clist: Список клеток для отрисовки, представленный в виде матрицы
         """
         a = self.cell_size
         for x in range(0, self.width, a):
@@ -126,13 +131,13 @@ class GUI(UI):
         self.draw_grid()
 
     def run(self):
-        """ Ð â€”Ð Â°Ð Ñ—Ð¡Ñ“Ð¡ÐƒÐ¡â€šÐ Ñ‘Ð¡â€šÐ¡ÐŠ Ð Ñ‘Ð Ñ–Ð¡Ð‚Ð¡Ñ“ """
+        """ Запустить игру """
         pygame.init()
         clock = pygame.time.Clock()
         pygame.display.set_caption('Game of Life')
         self.screen.fill(pygame.Color('white'))
 
-        # Ð ÐŽÐ Ñ•Ð Â·Ð Ò‘Ð Â°Ð Ð…Ð Ñ‘Ð Âµ Ð¡ÐƒÐ Ñ—Ð Ñ‘Ð¡ÐƒÐ Ñ”Ð Â° Ð Ñ”Ð Â»Ð ÂµÐ¡â€šÐ Ñ•Ð Ñ”
+        # Начальная отрисовка списка клеток
         self.draw_cell_list(self.life.curr_gen)
 
         running = True
@@ -144,8 +149,7 @@ class GUI(UI):
                     if event.key == K_SPACE:
                         if self.pause():
                             running = False
-            # Ð Ñ›Ð¡â€šÐ¡Ð‚Ð Ñ‘Ð¡ÐƒÐ Ñ•Ð Ð†Ð Ñ”Ð Â° Ð¡ÐƒÐ Ñ—Ð Ñ‘Ð¡ÐƒÐ Ñ”Ð Â° Ð Ñ”Ð Â»Ð ÂµÐ¡â€šÐ Ñ•Ð Ñ”
-            # Ð â€™Ð¡â€¹Ð Ñ—Ð Ñ•Ð Â»Ð Ð…Ð ÂµÐ Ð…Ð Ñ‘Ð Âµ Ð Ñ•Ð Ò‘Ð Ð…Ð Ñ•Ð Ñ–Ð Ñ• Ð¡â‚¬Ð Â°Ð Ñ–Ð Â° Ð Ñ‘Ð Ñ–Ð¡Ð‚Ð¡â€¹ (Ð Ñ•Ð Â±Ð Ð…Ð Ñ•Ð Ð†Ð Â»Ð ÂµÐ Ð…Ð Ñ‘Ð Âµ Ð¡ÐƒÐ Ñ•Ð¡ÐƒÐ¡â€šÐ Ñ•Ð¡ÐÐ Ð…Ð Ñ‘Ð¡Ð Ð¡ÐÐ¡â€¡Ð ÂµÐ ÂµÐ Ñ”)
+                            
             if running:
                 self.life.step()
                 self.draw_cell_list(self.life.curr_gen)
